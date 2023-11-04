@@ -1,0 +1,62 @@
+<div class="">
+    <nz-table #filterTable nzShowSizeChanger [nzData]="listOfAssetsData" nzTableLayout="fixed" [nzLoading]="loading"
+        [nzTotal]="total" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex" [nzFrontPagination]="false"
+        [nzScroll]="{ y: '450px' }">
+        <thead>
+            <tr>
+                <th *ngFor="let column of listofAssetsDataColumns" [nzSortOrder]="column.sortOrder"
+                    [nzSortFn]="column.sortFn" [nzSortDirections]="column.sortDirections"
+                    [nzFilterMultiple]="column.filterMultiple" [nzFilters]="column.listOfFilter"
+                    [nzFilterFn]="column.filterFn">
+                    {{ column.name }}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of filterTable.data"
+                [ngStyle]="{ color: (data.currentPrice - data.buyPrice >= 0) ? 'red' : 'green' }">
+                <td>
+                    <a (click)="showModal1(data)">{{ data.fundName }}</a>
+                    <nz-modal [(nzVisible)]="isVisible1" nzTitle="Stocks History Info" (nzOnCancel)="handleCancel1()"
+                        (nzOnOk)="handleOk1()" [nzOkLoading]="isOkLoading1" [nzWidth]=1000 class="modal_size">
+                        <div *nzModalContent>
+                            <div class="history_line_chart">
+                                <ngx-charts-line-chart [scheme]="colorScheme" [legend]="legend" [showXAxisLabel]="showXAxisLabel"
+                                    [showYAxisLabel]="showYAxisLabel" [xAxis]="xAxis" [yAxis]="yAxis" [xAxisLabel]="xAxisLabel"
+                                    [yAxisLabel]="yAxisLabel" [timeline]="timeline" [results]="multi" [autoScale]="autoScale"
+                                    (select)="onSelectLine($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+                                </ngx-charts-line-chart>
+                            </div>
+                        </div>
+                    </nz-modal>
+                </td>
+                <td>{{ data.buyPrice | currency}}</td>
+                <td>{{ data.buyDate | date}}</td>
+                <td>{{ data.currentPrice | currency }}</td>
+                <td>{{ data.positionNumber }}</td>
+                <td>{{ data.rateOfReturn/100 | percent }}</td>
+                <td>
+                    <button nz-button nzType="primary" (click)="showModal(data)">
+                        <span>SELL</span>
+                    </button>
+                    <nz-modal [(nzVisible)]="isVisible" nzTitle="Modal Title" (nzOnCancel)="handleCancel()"
+                        (nzOnOk)="handleOk()" [nzOkLoading]="isOkLoading">
+                        <div *nzModalContent>
+                            <form nz-form>
+                                <nz-form-item>
+                                    You are selling {{ data.stockName }} stock.
+                                </nz-form-item>
+                                <nz-form-item>
+                                    <nz-form-label [nzSpan]="6" nzFor="email">Sell Num</nz-form-label>
+                                    <nz-form-control [nzSpan]="14">
+                                        <input nz-input name="sell_num" [(ngModel)]="sell_number">
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </form>
+                        </div>
+                    </nz-modal>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>

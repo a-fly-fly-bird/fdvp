@@ -1,0 +1,64 @@
+version : '3'
+services:
+  tzz-mysql:
+    image: mysql
+    command: --authentication_policy=mysql_native_password
+    restart: unless-stopped
+    container_name: tzz-mysql-server
+    environment:
+      TZ: Asia/Shanghai                        # timezone
+      MYSQL_ROOT_PASSWORD: 123456              #数据库初始话为root用户设置的默认密码
+      MYSQL_DATABASE: financial_system         #数据库名
+      MYSQL_USER: tzz                          #自定义数据库的用户，权限只作用于MYSQL_DATABASE配置的数据库
+      MYSQL_PASSWORD: tzz_mysql.lqsym_zzt      #自定义数据库的用户，权限只作用于MYSQL_DATABASE配置的数据库
+    # restart: on-failure
+    ports:
+      # - "3306:3306"
+      - "3306:3306"
+    volumes:
+      - "./financial_system_dump.sql:/docker-entrypoint-initdb.d/1.sql"
+    networks:
+      - tzz-full-stack-network
+
+  tzz-backend:
+    depends_on:
+      - tzz-mysql
+    # image: portfolio-backend:v1
+    build: ./portfolio-management/
+    container_name: tzz-backend-server
+    restart: unless-stopped
+    # restart: on-failure
+    ports:
+      - "8080:8080"
+    env_file: ./.env
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url"  : "jdbc:mysql://tzz-mysql:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false？allowPublicKeyRetrieval=true",
+        "spring.datasource.username" : "$MYSQLDB_USER",
+        "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
+        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+        "spring.jpa.hibernate.ddl-auto" : "update"
+        }'
+    networks:
+      - tzz-full-stack-network
+  
+  tzz-frontend:
+    depends_on:
+      - tzz-backend
+    build: ./data-vision-zorro-version/
+    container_name: tzz-frontend-server
+    restart: unless-stopped
+    # restart: on-failure
+    ports:
+      - "80:80"
+    env_file: ./.env
+    environment:
+      - TZZ_BACKEND_URL=http://tzz-backend:8080
+    networks:
+      - tzz-full-stack-network
+
+networks:
+  tzz-full-stack-network:
+    driver: bridge
+    # enable_ipv6: false
+  

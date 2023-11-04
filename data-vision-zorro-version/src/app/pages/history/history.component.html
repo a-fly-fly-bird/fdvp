@@ -1,0 +1,18 @@
+<div>
+    <div class="number_charts">
+        <ngx-charts-number-card [view]="number_view" [scheme]="colorScheme" [results]="single1" [cardColor]="cardColor"
+            (select)="onSelect($event)" class="number_charts">
+        </ngx-charts-number-card>
+        <ngx-charts-number-card [view]="number_view" [scheme]="colorScheme" [results]="single2" [cardColor]="cardColor"
+            (select)="onSelect($event)">
+        </ngx-charts-number-card>
+    </div>
+
+    <div class="history_line_chart">
+        <ngx-charts-line-chart [scheme]="colorScheme" [legend]="legend" [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel" [xAxis]="xAxis" [yAxis]="yAxis" [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel" [timeline]="timeline" [results]="multi" [autoScale]="autoScale"
+            (select)="onSelectLine($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+        </ngx-charts-line-chart>
+    </div>
+</div>

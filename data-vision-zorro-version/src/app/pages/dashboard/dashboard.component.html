@@ -1,0 +1,87 @@
+<nz-layout class="layout-max">
+  <nz-header class="header-flex">
+    <div class="logo">
+      <h2 style="color: aqua; text-align:center; line-height: 30px;">Fin Vision</h2>
+    </div>
+    <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
+      <li nz-menu-item nzMatchRouter>
+        <a [routerLink]="['/', 'dashboard', 'table']">Market</a>
+      </li>
+      <li nz-menu-item nzMatchRouter nzSelected>
+        <a [routerLink]="['/', 'dashboard', 'details']">User</a>
+      </li>
+      <li nz-menu-item nzMatchRouter>
+        <a [routerLink]="['/', 'dashboard', 'history']">Insight</a>
+      </li>
+    </ul>
+    <div style="flex-grow: 1;">
+
+    </div>
+    <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu" [nzPlacement]="location">
+      <nz-avatar [nzGap]="gap" [ngStyle]="{ 'background-color': color }" [nzText]="text" nzSize="large"
+        style="vertical-align: middle;"></nz-avatar>
+    </a>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item (click)="goToUserDetail()">User Profile</li>
+        <li nz-menu-item (click)="goToLogin()">Logout</li>
+        <li nz-menu-divider></li>
+        <li nz-menu-item nzDisabled>unsubscribe</li>
+      </ul>
+    </nz-dropdown-menu>
+  </nz-header>
+  <nz-layout>
+    <nz-sider nzWidth="200px" nzTheme="light" class="overflow_hidden">
+      <ul nz-menu nzMode="inline" class="sider-menu">
+        <li nz-submenu nzOpen nzIcon="user" nzTitle="Market Overview">
+          <ul>
+            <!-- <li nz-menu-item nzSelected> -->
+            <li nz-menu-item>
+              <a [routerLink]="['/', 'dashboard', 'table']">Stock</a>
+            </li>
+            <li nz-menu-item>
+              <a [routerLink]="['/', 'dashboard', 'fund_table']">Fund</a>
+            </li>
+            <li nz-menu-item>
+              <a [routerLink]="['/', 'dashboard', 'bond_table']">Bond</a>
+            </li>
+          </ul>
+        </li>
+        <li nz-submenu nzTitle="Analyst" nzIcon="laptop">
+          <ul>
+            <li nz-menu-item>
+              <a [routerLink]="['/', 'dashboard', 'details']">User Overview</a>
+            </li>
+            <li nz-menu-item>
+              <a [routerLink]="['/', 'dashboard', 'user-overview']">User History</a>
+            </li>
+          </ul>
+        </li>
+        <li nz-submenu nzTitle="Action" nzIcon="notification">
+          <ul>
+            <li nz-menu-item>
+              <a [routerLink]="['/', 'dashboard', 'operation', 'sell_stock']">Sell Stock</a>
+            </li>
+            <li nz-menu-item>
+              <a [routerLink]="['/', 'dashboard', 'operation', 'sell_fund']">Sell Fund</a>
+            </li>
+            <li nz-menu-item>
+              <a [routerLink]="['/', 'dashboard', 'operation', 'sell_bond']">Sell Bond</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-layout class="inner-layout">
+      <!-- <nz-breadcrumb>
+        <nz-breadcrumb-item>Home</nz-breadcrumb-item>
+        <nz-breadcrumb-item>List</nz-breadcrumb-item>
+        <nz-breadcrumb-item>App</nz-breadcrumb-item>
+      </nz-breadcrumb> -->
+      <!-- <nz-divider></nz-divider> -->
+      <nz-content>
+        <router-outlet></router-outlet>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>

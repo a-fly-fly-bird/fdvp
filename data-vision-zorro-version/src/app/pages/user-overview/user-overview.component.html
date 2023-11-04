@@ -1,0 +1,31 @@
+<div>
+    <div>
+        <div class="">
+            <nz-table #filterTable nzShowSizeChanger nzShowPagination [nzData]="shownData" nzTableLayout="fixed" [nzLoading]="loading"
+            [nzTotal]="total" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex" [nzFrontPagination]="false" [nzScroll]="{ y: '460px' }" (nzPageIndexChange)="handlePageIndexChange($event)" (nzPageSizeChange)="handlePageSizeChange($event)">
+            <thead>
+                <tr>
+                    <th *ngFor="let column of listofAssetsDataColumns" [nzSortOrder]="column.sortOrder"
+                        [nzSortFn]="column.sortFn" [nzSortDirections]="column.sortDirections"
+                        [nzFilterMultiple]="column.filterMultiple" [nzFilters]="column.listOfFilter"
+                        [nzFilterFn]="column.filterFn">
+                        {{ column.name }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of filterTable.data" [ngStyle]="{ color: (data.transactionType === 'SELL') ? '#D9614E' : '#5085FF' }">
+                    <td>{{ data.id }}</td>
+                    <td>{{ data.productCode }}</td>
+                    <td>{{ data.productType }}</td>
+                    <td>{{ data.transactionAmount }}</td>
+                    <td>{{ data.transactionPrice | currency}}</td>
+                    <td>{{ data.transactionType }}</td>
+                    <td>{{ data.transactionDate | date}}</td>
+                    <td>{{ data.balance | currency}}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+        </div>
+    </div>
+</div>

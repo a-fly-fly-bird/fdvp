@@ -1,0 +1,61 @@
+<div class="login_css">
+  <div>
+    <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your username!">
+          <nz-input-group nzPrefixIcon="user">
+            <input type="text" nz-input formControlName="userName" placeholder="Username" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Password!">
+          <nz-input-group nzPrefixIcon="lock">
+            <input type="password" nz-input formControlName="password" placeholder="Password" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <div nz-row class="login-form-margin">
+        <div nz-col [nzSpan]="12">
+          <!-- <label nz-checkbox formControlName="remember">
+            <span>Remember me</span>
+          </label> -->
+        </div>
+        <div nz-col [nzSpan]="12">
+          <a class="login-form-forgot">Forgot password</a>
+        </div>
+      </div>
+      <!-- <button nz-button class="login-form-button login-form-margin" (click)="goToHomepage()">Log in</button> -->
+      <button nz-button class="login-form-button login-form-margin">Log in</button>
+      Or
+      <!-- <a>register now!</a> -->
+    </form>
+  </div>
+
+  <div>
+    <button nz-button nzType="primary" (click)="showModal()">
+      <span>register now!</span>
+    </button>
+    <nz-modal [(nzVisible)]="isVisible" nzTitle="Register" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+      [nzOkLoading]="isOkLoading">
+      <div *nzModalContent>
+        <div>
+          <p>name</p>
+          <input nz-input placeholder="name" [(ngModel)]="name" />
+        </div>
+        <div>
+          <p>password</p>
+          <input nz-input type="password" [(ngModel)]="password" />
+        </div>
+        <div>
+          <p>password check</p>
+          <input nz-input type="password" [(ngModel)]="password_again" />
+        </div>
+        <div>
+          <p>balance</p>
+          <input nz-input placeholder=10000000 [(ngModel)]="balance" />
+        </div>
+      </div>
+    </nz-modal>
+  </div>
+</div>

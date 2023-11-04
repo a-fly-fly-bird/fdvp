@@ -1,0 +1,60 @@
+<div style="background: #ECECEC;padding:30px;" class="container1">
+    <!-- <nz-breadcrumb>
+        <nz-breadcrumb-item>Home</nz-breadcrumb-item>
+        <nz-breadcrumb-item>List</nz-breadcrumb-item>
+        <nz-breadcrumb-item>App</nz-breadcrumb-item>
+      </nz-breadcrumb> -->
+    <div class="container2">
+        <div nz-row [nzGutter]="8" style="margin: 0px; padding: 0px;">
+            <div nz-col [nzSpan]="6">
+                <nz-card nzTitle="Total" style="background-color: dodgerblue;">
+                    <p>
+                        Total Return Rate: {{totalRetunrnRate / 100| percent}}
+                    </p>
+                </nz-card>
+            </div>
+            <div nz-col [nzSpan]="6">
+                <nz-card nzTitle="Stock" style="background-color: #E6951E;">
+                    <p>
+                        Return Rate: {{ stockData / 100 | percent }}
+                    </p>
+                </nz-card>
+            </div>
+            <div nz-col [nzSpan]="6">
+                <nz-card nzTitle="Fund" style="background-color: #27D9A0;">
+                    <p>
+                        Return Rate: {{ fundData / 100| percent }}
+                    </p>
+                </nz-card>
+            </div>
+            <div nz-col [nzSpan]="6">
+                <nz-card nzTitle="Bond" style="background-color: #FF00A7;">
+                    <p>
+                        Return Rate: {{ bondData / 100| percent}}
+                    </p>
+                </nz-card>
+            </div>
+        </div>
+        <div>
+            <ngx-charts-advanced-pie-chart [view]="view1" [scheme]="colorScheme" [results]="single" [gradient]="gradient"
+                (select)="onSelect1($event)" (activate)="onActivate1($event)" (deactivate)="onDeactivate1($event)">
+            </ngx-charts-advanced-pie-chart>
+        </div>
+    </div>
+    <nz-divider></nz-divider>
+    
+    <div class="charts">
+        <ngx-charts-line-chart [view]="view2" [scheme]="colorScheme" [legend]="legend" [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel" [xAxis]="xAxis" [yAxis]="yAxis" [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel" [timeline]="timeline" [results]="multi" [autoScale]="autoScale"
+            (select)="onSelect($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+        </ngx-charts-line-chart>
+
+        <!-- <ngx-charts-line-chart [scheme]="colorScheme" [legend]="legend" [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel" [xAxis]="xAxis" [yAxis]="yAxis" [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel" [timeline]="timeline" [results]="multi" [autoScale]="autoScale"
+            (select)="onSelect($event)" (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+        </ngx-charts-line-chart> -->
+    </div>
+
+</div>

@@ -1,0 +1,57 @@
+<div class="">
+    <nz-date-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-date-picker>
+    <nz-table #filterTable nzShowSizeChanger [nzData]="listOfAssetsData" nzTableLayout="fixed" [nzLoading]="loading"
+        [nzTotal]="total" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex" [nzFrontPagination]="false"
+        [nzScroll]="{ y: '450px' }">
+        <thead>
+            <tr>
+                <th *ngFor="let column of listofAssetsDataColumns" [nzSortOrder]="column.sortOrder"
+                    [nzSortFn]="column.sortFn" [nzSortDirections]="column.sortDirections"
+                    [nzFilterMultiple]="column.filterMultiple" [nzFilters]="column.listOfFilter"
+                    [nzFilterFn]="column.filterFn">
+                    {{ column.name }}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of filterTable.data"
+                [ngStyle]="{ color: (data.close - data.open >= 0) ? 'red' : 'green' }">
+                <td>
+                    <a [routerLink]="['/', 'dashboard', 'history']"
+                        [queryParams]="{catagory: 'stock', assets_name: (data.name)}">{{ data.name
+                        }}</a>
+                </td>
+                <td>{{ data.date | date}}</td>
+                <td>{{ data.open | currency }}</td>
+                <td>{{ data.high | currency}}</td>
+                <td>{{ data.low | currency}}</td>
+                <td>{{ data.close | currency}}</td>
+                <td>{{ data.adjClose | currency}}</td>
+                <td>{{ data.volume }}</td>
+                <td>
+                    <button nz-button nzType="primary" (click)="showModal(data)">
+                        <span>Buy</span>
+                    </button>
+                    <!-- put here, not in table to show the background -->
+                    <nz-modal [(nzVisible)]="isVisible" nzTitle="Buy Stocks" (nzOnCancel)="handleCancel()"
+                        (nzOnOk)="handleOk()" [nzOkLoading]="isOkLoading">
+                        <div *nzModalContent>
+                            <form nz-form>
+                                <nz-form-item>
+                                    You are buying {{ selected_data.name }} stock.
+                                </nz-form-item>
+                                <nz-form-item>
+                                    <nz-form-label [nzSpan]="6" nzFor="email">Sell Num</nz-form-label>
+                                    <nz-form-control [nzSpan]="14">
+                                        <input nz-input name="sell_num" [(ngModel)]="buy_number">
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </form>
+                        </div>
+                    </nz-modal>
+                </td>
+            </tr>
+
+        </tbody>
+    </nz-table>
+</div>
